@@ -7,7 +7,7 @@ const {
   createUser,
   getUserAllCourses,
   getUserCourse,
-} = require("../controllers/users.controller");
+} = require("../controllers/tutores.controller");
 
 router.route("/").get(getAllUsers).post(createUser);
 router.route("/:userId").get(getUser);
