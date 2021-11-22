@@ -1,8 +1,8 @@
-const User = require("../models/User.model");
+const Tutor = require("../models/Tutor.model");
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find({});
+    const users = await Tutor.find({});
     res.status(200).json({ users });
   } catch (error) {
     res.status(500).json({ msg: error });
@@ -12,7 +12,7 @@ const getAllUsers = async (req, res) => {
 const getUser = async (req, res) => {
   try {
     const { userId: userId } = req.params;
-    const user = await User.findOne({ _id: userId });
+    const user = await Tutor.findOne({ _id: userId });
     if (!user) {
       return res.status(404).json({ msg: `No user with id : ${userId}` });
     }
@@ -24,7 +24,7 @@ const getUser = async (req, res) => {
 
 const createUser = async (req, res) => {
   try {
-    const user = await User.create(req.body);
+    const user = await Tutor.create(req.body);
     res.status(201).json({ user });
   } catch (error) {
     res.status(500).json({ msg: error });

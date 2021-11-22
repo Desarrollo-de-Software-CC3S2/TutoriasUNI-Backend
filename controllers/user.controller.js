@@ -1,4 +1,11 @@
-const getUserAllCourses = (req, res) => {
+const User = require("../models/User.model");
+
+const getUserAllCourses = async (req, res) => {
+  try {
+    const courses = await User.findOne({});
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
   res.send("user all courses")
 }
 
