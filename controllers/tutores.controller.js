@@ -1,4 +1,5 @@
 const Tutor = require("../models/Tutor.model");
+const bcrypt = require("bcrypt");
 
 const getAllUsers = async (req, res) => {
   try {
@@ -24,8 +25,30 @@ const getUser = async (req, res) => {
 
 const createUser = async (req, res) => {
   try {
-    const user = await Tutor.create(req.body);
-    res.status(201).json({ user });
+    const exist = await Tutor.findOne({ email: req.body.email });
+    if (!exist) {
+      let passwordHash = await bcrypt.hash(req.body.password, 10);
+      req.body.password = passwordHash;
+      const user = await Tutor.create(req.body);
+      res.status(201).json(user);
+    } else {
+      res
+        .status(400)
+        .json({ msg: `User with email: ${req.body.email} already exists` });
+    }
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
+};
+
+const updateUser = async (req, res) => {
+  try {
+    const user = await Tutor.findOneAndUpdate({ _id: req.body._id }, req.body);
+    if (!user) {
+      res.status(404);
+    } else {
+      res.status(202).json(user);
+    }
   } catch (error) {
     res.status(500).json({ msg: error });
   }
@@ -47,4 +70,5 @@ module.exports = {
   createUser,
   getUserAllCourses,
   getUserCourse,
+  updateUser,
 };

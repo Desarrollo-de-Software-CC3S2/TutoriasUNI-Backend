@@ -7,9 +7,10 @@ const {
   createUser,
   getUserAllCourses,
   getUserCourse,
+  updateUser,
 } = require("../controllers/tutores.controller");
 
-router.route("/").get(getAllUsers).post(createUser);
+router.route("/").get(getAllUsers).post(createUser).patch(updateUser);
 router.route("/:userId").get(getUser);
 router.route("/:userId/courses").get(getUserAllCourses);
 router.route("/:userId/courses/:courseId").get(getUserCourse);
