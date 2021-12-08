@@ -14,20 +14,22 @@ const AlumnoSchema = new mongoose.Schema({
   cursos: {
     type: [
       {
-        courseId: String,
-        tareas: {
-          type: [
-            {
-              name: String,
-              resuelto: { type: Boolean, default: false },
-            },
-          ],
-          default: [],
-        },
-      },
-    ],
-    default: [],
+        id_curso: String,
+        nombre: String,
+        codigo: String,
+        tema: String,
+      }
+    ],default: []
   },
+  chatbot: {
+    type: [
+      {
+        id_bot: String,
+        mensaje: String,
+        presona: Boolean         
+      }
+    ],default: []
+  }
 });
 
 module.exports = mongoose.model("Alumno", AlumnoSchema);
