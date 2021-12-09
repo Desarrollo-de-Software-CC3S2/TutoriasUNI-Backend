@@ -1,10 +1,13 @@
 const Alumno = require("../models/Alumno.model");
-const CourseModel = require("../models/Course.model");
+
+const Course = require("../models/Course.model");
+const Tutor = require("../models/Tutor.model");
+
 
 const getAllUsers = async (req, res) => {
   try {
     const users = await Alumno.find({});
-    res.status(200).json({ users });
+    res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ msg: error });
   }
@@ -17,7 +20,7 @@ const getUser = async (req, res) => {
     if (!user) {
       return res.status(404).json({ msg: `No user with id : ${userId}` });
     }
-    res.status(200).json({ user });
+    res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ msg: error });
   }
@@ -26,7 +29,7 @@ const getUser = async (req, res) => {
 const createUser = async (req, res) => {
   try {
     const user = await Alumno.create(req.body);
-    res.status(201).json({ user });
+    res.status(201).json(user);
   } catch (error) {
     res.status(500).json({ msg: error });
   }
@@ -51,12 +54,45 @@ const getUserCourse = async (req, res) => {
 };
 
 const addUserToCourse = async (req, res) => {
-  const { userId: userId, courseId: courseId } = req.params;
-  const result = await Alumno.updateOne({
-    _id: userId
-  }, {$push:{cursos:{id_curso:courseId}}});
-  res.send('Alumno Agregado al curso');
+  try {
+    const { userId: userId, courseId: courseId } = req.params;
+    const user_temp = await Alumno.findOne({ _id: userId });
+    if (!user_temp) {
+      return res.status(404).json({ msg: `No user with id : ${userId}` });
+    } else {
+      const course = await Course.findOne({ _id: courseId });
+      if (!course) {
+        return res.status(404);
+      } else {
+        const tutor = await Tutor.findOne({ _id: course.profesorId });
+        let cursos = user_temp.cursos;
+        cursos.push({
+          id_curso: course._id,
+          nombre: course.nombre,
+          codigo: course.codigo,
+          tema: course.tema,
+          nombre_tutor: tutor.name + " " + tutor.lastname,
+        });
+        const user = await Alumno.findOneAndUpdate(
+          { _id: userId },
+          { cursos: cursos },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+        if (!user) {
+          return res.status(404).json({ msg: `No user with id : ${userId}` });
+        } else {
+          res.status(202).json(user);
+        }
+      }
+    }
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
 };
+
 
 
 

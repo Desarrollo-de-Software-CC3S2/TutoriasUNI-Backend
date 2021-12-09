@@ -18,18 +18,21 @@ const AlumnoSchema = new mongoose.Schema({
         nombre: String,
         codigo: String,
         tema: String,
-      }
-    ],default: []
+        nombre_tutor: String,
+      },
+    ],
+    default: [],
   },
   chatbot: {
     type: [
       {
         id_bot: String,
         mensaje: String,
-        presona: Boolean         
-      }
-    ],default: []
-  }
+        presona: Boolean,
+      },
+    ],
+    default: [],
+  },
 });
 
 module.exports = mongoose.model("Alumno", AlumnoSchema);
