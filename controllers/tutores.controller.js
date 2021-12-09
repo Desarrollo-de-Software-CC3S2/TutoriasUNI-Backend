@@ -43,7 +43,8 @@ const createUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-    const user = await Tutor.findOneAndUpdate({ _id: req.body._id }, req.body, {
+    const { userId: userId } = req.params;
+    const user = await Tutor.findOneAndUpdate({ _id: userId }, req.body, {
       new: true,
       runValidators: true,
     });
