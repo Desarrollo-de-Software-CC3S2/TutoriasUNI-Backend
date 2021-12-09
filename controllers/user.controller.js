@@ -6,19 +6,19 @@ const getUserAllCourses = async (req, res) => {
   } catch (error) {
     res.status(500).json({ msg: error });
   }
-  res.send("user all courses")
-}
+  res.send("user all courses");
+};
 
 const getUserCourse = (req, res) => {
-  res.send("user course")
-}
+  res.send("user course");
+};
 
 const addUserToCourse = (req, res) => {
-  res.send("añadirse a un curso")
-}
+  res.send("añadirse a un curso");
+};
 
 module.exports = {
   getUserAllCourses,
   getUserCourse,
   addUserToCourse,
-}
+};

@@ -9,7 +9,6 @@ const createCourse = async (req, res) => {
   }
 };
 
-
 const deleteCourse = async (req, res) => {
   try {
     const { courseId: courseId } = req.params;
@@ -76,9 +75,6 @@ const getAllCourses = async (req, res) => {
     res.status(500).json({ msg: error });
   }
 };
-
-
-
 
 module.exports = {
   createCourse,

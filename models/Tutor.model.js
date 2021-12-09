@@ -11,13 +11,17 @@ const TutorSchema = new mongoose.Schema({
     maxlength: 7,
     default: "tutor",
   },
-  cursos: { type: [{
-    id_curso: String,
-    nombre: String,
-    codigo: String,
-    tema: String,
-    }],
-    default: [] },
+  cursos: {
+    type: [
+      {
+        id_curso: String,
+        nombre: String,
+        codigo: String,
+        tema: String,
+      },
+    ],
+    default: [],
+  },
 });
 
 module.exports = mongoose.model("Tutor", TutorSchema);

@@ -1,8 +1,6 @@
 const Alumno = require("../models/Alumno.model");
-
 const Course = require("../models/Course.model");
 const Tutor = require("../models/Tutor.model");
-
 
 const getAllUsers = async (req, res) => {
   try {
@@ -38,13 +36,13 @@ const createUser = async (req, res) => {
 // mostrar todos los cursos
 const getUserAllCourses = async (req, res) => {
   const { userId: userId } = req.params;
-  const userData = await Alumno.findById(userId)
-  if(userData){
-    const id_cursos = userData.cursos.map(value=>value.id_curso)
-    const cursos = await CourseModel.find({_id:{$in:id_cursos}})
-    res.send(cursos)
-  }else{
-    res.send("Usuario no existe")
+  const userData = await Alumno.findById(userId);
+  if (userData) {
+    const id_cursos = userData.cursos.map((value) => value.id_curso);
+    const cursos = await CourseModel.find({ _id: { $in: id_cursos } });
+    res.send(cursos);
+  } else {
+    res.send("Usuario no existe");
   }
 };
 
@@ -92,9 +90,6 @@ const addUserToCourse = async (req, res) => {
     res.status(500).json({ msg: error });
   }
 };
-
-
-
 
 module.exports = {
   getAllUsers,

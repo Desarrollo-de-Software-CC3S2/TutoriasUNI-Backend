@@ -13,6 +13,9 @@ const {
 router.route("/").get(getAllUsers).post(createUser);
 router.route("/:userId").get(getUser);
 router.route("/:userId/courses").get(getUserAllCourses);
-router.route("/:userId/courses/:courseId").get(getUserCourse).patch(addUserToCourse);
+router
+  .route("/:userId/courses/:courseId")
+  .get(getUserCourse)
+  .patch(addUserToCourse);
 
 module.exports = router;

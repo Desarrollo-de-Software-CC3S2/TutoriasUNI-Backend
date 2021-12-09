@@ -11,10 +11,15 @@ const CourseSchema = new mongoose.Schema({
     default: short.generate(),
   },
   profesorId: { type: String, required: true },
-  contenido: { type: [{
-    tipo: String,
-    link: String
-  }], default: [] },
+  contenido: {
+    type: [
+      {
+        tipo: String,
+        link: String,
+      },
+    ],
+    default: [],
+  },
 });
 
 module.exports = mongoose.model("Course", CourseSchema);
