@@ -50,7 +50,7 @@ const addUserToCourse = async (req, res) => {
     if (!user_temp) {
       return res.status(404).json({ msg: `No user with id : ${userId}` });
     } else {
-      const course = await Course.findOne({ codigo: courseId });
+      const course = await Course.findOne({ _id: courseId });
       if (!course) {
         return res.status(404);
       } else {
