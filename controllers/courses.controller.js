@@ -9,6 +9,7 @@ const createCourse = async (req, res) => {
   }
 };
 
+
 const deleteCourse = async (req, res) => {
   try {
     const { courseId: courseId } = req.params;

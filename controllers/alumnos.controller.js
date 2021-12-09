@@ -1,4 +1,5 @@
 const Alumno = require("../models/Alumno.model");
+const CourseModel = require("../models/Course.model");
 
 const getAllUsers = async (req, res) => {
   try {
@@ -31,9 +32,17 @@ const createUser = async (req, res) => {
   }
 };
 
+// mostrar todos los cursos
 const getUserAllCourses = async (req, res) => {
   const { userId: userId } = req.params;
-  res.send(`Todos los cursos del usuario con id ${userId}`);
+  const userData = await Alumno.findById(userId)
+  if(userData){
+    const id_cursos = userData.cursos.map(value=>value.id_curso)
+    const cursos = await CourseModel.find({_id:{$in:id_cursos}})
+    res.send(cursos)
+  }else{
+    res.send("Usuario no existe")
+  }
 };
 
 const getUserCourse = async (req, res) => {
@@ -43,8 +52,13 @@ const getUserCourse = async (req, res) => {
 
 const addUserToCourse = async (req, res) => {
   const { userId: userId, courseId: courseId } = req.params;
-  res.send(`inluir alumno con id ${userId} al curso con id ${courseId}`);
+  const result = await Alumno.updateOne({
+    _id: userId
+  }, {$push:{cursos:{id_curso:courseId}}});
+  res.send('Alumno Agregado al curso');
 };
+
+
 
 module.exports = {
   getAllUsers,
