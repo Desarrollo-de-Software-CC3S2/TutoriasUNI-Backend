@@ -9,6 +9,7 @@ require("dotenv").config();
 
 // middleware
 app.use(express.json());
+app.use(express.raw());
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
