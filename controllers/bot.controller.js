@@ -8,7 +8,8 @@ const mensaje_bot = async (req, res) => {
     pregunta = pregunta.toLocaleLowerCase();
     let cadena = pregunta
     let respuesta = []
-
+    let responces = ""
+    let zzz = 0;
     const operacion = get_filtro(pregunta)
     const user = req.body.userID
     if (typeof operacion == 'string') {
@@ -29,28 +30,25 @@ const mensaje_bot = async (req, res) => {
                     var zz = dataUser1.cursos[x].nombre_tutor;
                     zz = zz.toLocaleLowerCase();
                     var Nombre = RegExp(zz);
-                    console.log(dataUser1.cursos[x].tema)
                     if (Nombre.test(cadena) && dataUser1.cursos[x].tema == "Matematica"){
-                        console.log("entre")
-                        console.log(dataUser1.cursos[x].nombre, " ", dataUser1.cursos[x].tema)
+                        responces = dataUser1.cursos[x].nombre + " " + dataUser1.cursos[x].tema + " (" + dataUser1.cursos[x].id_curso + ") | "
                     }
                 }
+                
                 break
             case 2:
                 // mostrar cursos de fisica que estoy llevando el profesor-"nombre_del_profesor"
                 const dataUser2 = await Alumno.findById(user)
                 const id_cursos2 = dataUser1.cursos.map(value => value.id_curso)
                 const cursos2 = await CourseModel.find({ _id: { $in: id_cursos2 } })
-                //console.log(cursos1)
                 const id_profesores2 = cursos2.map(value => value.profesorId)
                 const data_profesor2 = await Tutor.find({ _id: { $in: id_profesores2 } })
-                // console.log(dataUser1)
                 for (var x = 0; x < dataUser2.cursos.length; x++) {
                     var zz = dataUser2.cursos[x].nombre_tutor;
                     zz = zz.toLocaleLowerCase();
                     var Nombre = RegExp(zz);
                     if (Nombre.test(cadena) && dataUser2.cursos[x].tema == "Fisica") {
-                        console.log(dataUser2.cursos[x].nombre, " ", dataUser5.cursos[x].tema)
+                        responces = dataUser1.cursos[x].nombre + " " + dataUser1.cursos[x].tema + " | "
                     }
                 }
                 break
@@ -67,7 +65,7 @@ const mensaje_bot = async (req, res) => {
                     zz = zz.toLocaleLowerCase();
                     var Nombre = RegExp(zz);
                     if (Nombre.test(cadena) && dataUser3.cursos[x].tema == "Quimica") {
-                        console.log(dataUser3.cursos[x].nombre, " ", dataUser5.cursos[x].tema)
+                        console.log(dataUser3.cursos[x].nombre, " ", dataUser3.cursos[x].tema)
                     }
                 }
                 break
@@ -84,7 +82,7 @@ const mensaje_bot = async (req, res) => {
                     zz = zz.toLocaleLowerCase();
                     var Nombre = RegExp(zz);
                     if (Nombre.test(cadena) && dataUser4.cursos[x].tema == "Computacion") {
-                        console.log(dataUser4.cursos[x].nombre, " ", dataUser5.cursos[x].tema)
+                        console.log(dataUser4.cursos[x].nombre, " ", dataUser4.cursos[x].tema)
                     }
                 }
                 break
@@ -298,12 +296,84 @@ const mensaje_bot = async (req, res) => {
                 }
                 break
             case 21:
+                const dataUser21 = await Alumno.findById(user)  
+                //console.log(dataUser21)
+                let datas21 = [];
+                let long_data21 = 0;
+                let mm21=0;
+                for (var x=0; x<dataUser21.cursos.length ; x++){
+                    mm21=0
+                    if(dataUser21.cursos[x].tema=="Matematica"){
+                        for(var i=0 ; i<long_data21 ; i++){
+                            mm21++;
+                        }
+                        if(mm21==0){
+                            datas.push(dataUser21.cursos[x].nombre_tutor)
+                            long_data21++;
+                        }
+                    }
+                }
+                console.log(datas21)
                 break
             case 22:
+                const dataUser22 = await Alumno.findById(user)  
+                //console.log(dataUser21)
+                let datas22 = [];
+                let long_data22 = 0;
+                let mm22=0;
+                for (var x=0; x<dataUser22.cursos.length ; x++){
+                    mm22=0
+                    if(dataUser22.cursos[x].tema=="Fisica"){
+                        for(var i=0 ; i<long_data22 ; i++){
+                            mm22++;
+                        }
+                        if(mm22==0){
+                            datas.push(dataUser22.cursos[x].nombre_tutor)
+                            long_data22++;
+                        }
+                    }
+                }
+                console.log(datas22)
                 break
             case 23:
+                const dataUser23 = await Alumno.findById(user)  
+                //console.log(dataUser21)
+                let datas23 = [];
+                let long_data23 = 0;
+                let mm23=0;
+                for (var x=0; x<dataUser23.cursos.length ; x++){
+                    mm23=0
+                    if(dataUser23.cursos[x].tema=="Quimica"){
+                        for(var i=0 ; i<long_data23 ; i++){
+                            mm23++;
+                        }
+                        if(mm23==0){
+                            datas.push(dataUser23.cursos[x].nombre_tutor)
+                            long_data23++;
+                        }
+                    }
+                }
+                console.log(datas23)
                 break
             case 24:
+                const dataUser24 = await Alumno.findById(user)  
+                //console.log(dataUser21)
+                let datas24 = [];
+                let long_data24 = 0;
+                let mm24=0;
+                for (var x=0; x<dataUser24.cursos.length ; x++){
+                    mm24=0
+                    if(dataUser24.cursos[x].tema=="Computacion"){
+                        for(var i=0 ; i<long_data24 ; i++){
+                            mm24++;
+                        }
+                        if(mm24==0){
+                            datas.push(dataUser24.cursos[x].nombre_tutor)
+                            long_data24++;
+                        }
+                    }
+                }
+                console.log(datas24)
                 break
             case 25:
                 break
@@ -318,16 +388,131 @@ const mensaje_bot = async (req, res) => {
             case 30:
                 break
             case 31:
+                // mostrar cursos de matematica que estoy llevando el profesor-"nombre_del_profesor"
+                const dataUser30 = await Alumno.findById(user)
+                const id_cursos30 = dataUser30.cursos.map(value => value.id_curso)
+                const cursos30 = await CourseModel.find({ _id: { $in: id_cursos30 } })
+                //console.log(cursos1)
+                const id_profesores30 = cursos30.map(value => value.profesorId)
+                const data_profesor30 = await Tutor.find({ _id: { $in: id_profesores30 } })
+                // console.log(dataUser1)
+                for (var x = 0; x < dataUser30.cursos.length; x++) {
+                    var zz = dataUser30.cursos[x].nombre_tutor;
+                    zz = zz.toLocaleLowerCase();
+                    var Nombre = RegExp(zz);
+                    if (Nombre.test(cadena) && dataUser30.cursos[x].tema == "Idiomas") {
+                        console.log(dataUser30.cursos[x].nombre, " ", dataUser30.cursos[x].tema)
+                    }
+                }
                 break
             case 32:
+                // mostrar cursos de matematica que estoy llevando el profesor-"nombre_del_profesor"
+                const dataUser32 = await Alumno.findById(user)
+                const id_cursos32 = dataUser32.cursos.map(value => value.id_curso)
+                const cursos32 = await CourseModel.find({ _id: { $in: id_cursos32 } })
+                //console.log(cursos1)
+                const id_profesores32 = cursos32.map(value => value.profesorId)
+                const data_profesor32 = await Tutor.find({ _id: { $in: id_profesores32 } })
+                // console.log(dataUser1)
+                for (var x = 0; x < dataUser32.cursos.length; x++) {
+                    var zz = dataUser32.cursos[x].nombre_tutor;
+                    zz = zz.toLocaleLowerCase();
+                    var Nombre = RegExp(zz);
+                    if (Nombre.test(cadena) && dataUser32.cursos[x].tema == "Letras") {
+                        console.log(dataUser32.cursos[x].nombre, " ", dataUser32.cursos[x].tema)
+                    }
+                }
                 break
             case 33:
+                // idiomas
+                const dataUser33 = await Alumno.findById(user)
+                const id_cursos33 = dataUser33.cursos.map(value => value.id_curso)
+                const cursos33 = await CourseModel.find({ _id:{$in:id_cursos33}})
+                //console.log(cursos11)
+                const id_profesores33 = cursos33.map(value => value.profesorId)
+                const data_profesor33 = await Tutor.find({ _id:{$in:id_profesores33}})
+                //console.log(dataUser11)
+                for (var x = 0; x < dataUser33.cursos.length; x++) {
+                    if(dataUser33.cursos[x].tema =="Idiomas"){
+                        console.log(dataUser33.cursos[x].tema," ",dataUser33.cursos[x].nombre)
+                    }
+                }
                 break
             case 34:
+                // letras
+                const dataUser34 = await Alumno.findById(user)
+                const id_cursos34 = dataUser34.cursos.map(value => value.id_curso)
+                const cursos34 = await CourseModel.find({ _id:{$in:id_cursos34}})
+                //console.log(cursos11)
+                const id_profesores34 = cursos34.map(value => value.profesorId)
+                const data_profesor34 = await Tutor.find({ _id:{$in:id_profesores34}})
+                //console.log(dataUser11)
+                for (var x = 0; x < dataUser34.cursos.length; x++) {
+                    if(dataUser34.cursos[x].tema =="Letras"){
+                        console.log(dataUser34.cursos[x].tema," ",dataUser34.cursos[x].nombre)
+                    }
+                }
                 break
+            case 35:
+                const tutor35 = await Tutor.find({});
+                for(var x=0 ; x<tutor35.length ; x++){
+                    //console.log("entre")
+                    var zz = tutor35[x].name_lastname;
+                    zz = zz.toLocaleLowerCase();
+                    var Nombre = RegExp(zz);
+                    if(Nombre.test(cadena)){
+                        for(var y=0 ; y<tutor35[x].cursos.length ; y++){
+                            if(tutor8[x].cursos[y].tema == "Idiomas"){
+                                console.log(tutor35[x].cursos[y].tema," ",tutor35[x].cursos[y].nombre)
+                            }
+                        }
+                    }
+                }
+                break
+            case 36:
+                const tutor36 = await Tutor.find({});
+                for(var x=0 ; x<tutor36.length ; x++){
+                    //console.log("entre")
+                    var zz = tutor36[x].name_lastname;
+                    zz = zz.toLocaleLowerCase();
+                    var Nombre = RegExp(zz);
+                    if(Nombre.test(cadena)){
+                        for(var y=0 ; y<tutor36[x].cursos.length ; y++){
+                            if(tutor36[x].cursos[y].tema == "Letras"){
+                                console.log(tutor36[x].cursos[y].tema," ",tutor36[x].cursos[y].nombre)
+                            }
+                        }
+                    }
+                }
+                break
+            case 37:
+                const cursos37 = await CourseModel.find({});
+                for (var x = 0; x <cursos37.length; x++) {
+                    if(cursos37[x].tema =="Idiomas"){
+                        console.log(cursos37[x].tema," ",cursos37[x].nombre)
+                    }
+                }
+                break
+            case 38:
+                const cursos38 = await CourseModel.find({});
+                for (var x = 0; x <cursos38.length; x++) {
+                    if(cursos38[x].tema =="Letras"){
+                        console.log(cursos38[x].tema," ",cursos38[x].nombre)
+                    }
+                }
+                break
+            case 39:
 
+            
+                break
+            case 40:
+                break
+            case 41:
+                break
+            case 42:
+                break
         }
-        res.send(respuesta)
+        res.status(200).json({msg:responces})
     }
 }
 
@@ -340,7 +525,7 @@ function get_filtro(cadena) {
     var llevar = RegExp("llevo|llevando|me enseña");
     var estoy = RegExp("estoy matriculado|estoy matriculada");
     var cursos = /cursos/;
-    var curso = RegExp / ("curso|area|campo");
+    var curso = RegExp("curso|area|campo");
 
     // fechas
     var fecha = RegExp("dia|fecha");
@@ -432,10 +617,22 @@ function get_filtro(cadena) {
                     s++;
                     flack = 24
                 }
+                if (idiomas.test(cadena)) {
+                    // mostrar todos los profesores que me enseñan el curso de quimica
+                    s++;
+                    flack = 39;
+                }
+                if (letras.test(cadena)) {
+                    // mostrar todos los profesores que me enseñan el curso de computacion
+                    s++;
+                    flack = 40;
+                }
                 if (s == 0) {
                     // mostrar todos los profesores que me enseñan
                     flack = 25;
                 }
+
+
             } else {
                 // ALL CURSOS ()
                 if (math.test(cadena)) {
@@ -458,6 +655,17 @@ function get_filtro(cadena) {
                     // mostar todos profesores que enseñan el curso de fisica
                     s++;
                     flack = 29
+                }
+                if (idiomas.test(cadena)) {
+                    // mostar todos profesores que enseñan el curso de computacion
+                    s++;
+                    flack = 41;
+
+                }
+                if (letras.test(cadena)) {
+                    // mostar todos profesores que enseñan el curso de fisica
+                    s++;
+                    flack = 42;
                 }
             }
         } else {
@@ -494,6 +702,16 @@ function get_filtro(cadena) {
                     // mostrar cursos de computacion que estoy llevando el profesor-"nombre_del_profesor"
                     flack = 4
                 }
+                if (idiomas.test(cadena)){
+                    m++;
+                    // mostrar cursos de idiomas que estoy llevando el profesor-"nombre_del_profesor"
+                    flack = 31
+                }
+                if (letras.test(cadena)){
+                    m++;
+                    // mostrar cursos de letras que estoy llevando el profesor-"nombre_del_profesor"
+                    flack = 32
+                }
                 if (m == 0) {
                     // mostrar todos los cursos que estoy llevando con el profesor-"nombre_del_profesor"
                     flack = 5
@@ -520,7 +738,16 @@ function get_filtro(cadena) {
                     // mostrar todos los cursos de computacion que enseña el profesor-"nombre_del_profesor"
                     flack = 9
                 }
-
+                if (idiomas.test(cadena)){
+                    m++;
+                    // mostrar cursos de idiomas que enseña el profesor-"nombre_del_profesor"
+                    flack = 35
+                }
+                if (letras.test(cadena)){
+                    m++;
+                    // mostrar cursos de letras que enseña el profesor-"nombre_del_profesor"
+                    flack = 36
+                }
                 if (m == 0) {
                     // mostrar todos los cursos que enseña el profesor-"nombre_del_profesor"
                     flack = 10
@@ -550,6 +777,16 @@ function get_filtro(cadena) {
                     flack = 14
                     m++;
                 }
+                if (idiomas.test(cadena)){
+                    m++;
+                    // mostrar cursos de idiomas que estoy llevando 
+                    flack = 33
+                }
+                if (letras.test(cadena)){
+                    m++;
+                    // mostrar cursos de letras que estoy llevando el profesor-"nombre_del_profesor"
+                    flack = 34
+                }
                 if (m == 0) {
                     // mostrar todos los cursos que llevo
                     flack = 15
@@ -577,7 +814,16 @@ function get_filtro(cadena) {
                     m++;
                     flack = 19
                 }
-
+                if (idiomas.test(cadena)){
+                    m++;
+                    // mostrar cursos de idiomas que estoy llevando el profesor-"nombre_del_profesor"
+                    flack = 37
+                }
+                if (letras.test(cadena)){
+                    m++;
+                    // mostrar cursos de letras que estoy llevando el profesor-"nombre_del_profesor"
+                    flack = 38
+                }
                 if (m == 0) {
                     // mostrar todos los cursos
                     flack = 20
