@@ -69,7 +69,7 @@ const addUserToCourse = async (req, res) => {
           nombre: course.nombre,
           codigo: course.codigo,
           tema: course.tema,
-          nombre_tutor: tutor.name + " " + tutor.lastname,
+          nombre_tutor: tutor.name_lastname,
         });
         const user = await Alumno.findOneAndUpdate(
           { _id: userId },
