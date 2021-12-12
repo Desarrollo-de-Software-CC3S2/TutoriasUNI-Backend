@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const TutorSchema = new mongoose.Schema({
   email: { type: String, required: true, trim: true },
   password: { type: String, required: true },
-  name: { type: String, required: true, trim: true, maxlength: 25 },
-  lastname: { type: String, required: true, trim: true, maxlength: 25 },
+  name_lastname: { type: String, required: true, trim: true, maxlength: 50 },
+  //lastname: { type: String, required: true, trim: true, maxlength: 25 },
   rol: {
     type: String,
     trim: true,
