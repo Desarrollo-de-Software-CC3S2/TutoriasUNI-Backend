@@ -5,6 +5,7 @@ const alumnos = require("./routes/alumnos.route");
 const tutores = require("./routes/tutores.route");
 const bots = require("./routes/bot.route");
 const auth = require("./routes/auth.route");
+const index = require("./routes/index.route");
 const connectDB = require("./db/connect");
 require("dotenv").config();
 
@@ -23,6 +24,7 @@ app.use(function (req, res, next) {
 });
 
 // routes
+app.use("/", index);
 app.use("/api/v1/auth", auth);
 app.use("/api/v1/courses", courses);
 app.use("/api/v1/alumnos", alumnos);
