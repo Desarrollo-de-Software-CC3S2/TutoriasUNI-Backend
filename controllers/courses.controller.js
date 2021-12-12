@@ -1,4 +1,6 @@
 const Course = require("../models/Course.model");
+const Tutor = require("../models/Tutor.model");
+const Alumno = require("../models/Alumno.model");
 
 const createCourse = async (req, res) => {
   try {
@@ -15,6 +17,26 @@ const deleteCourse = async (req, res) => {
     const course = await Course.findOneAndDelete({ _id: courseId });
     if (!course) {
       return res.status(404).json({ msg: `No course with id : ${courseId}` });
+    }
+    const tutor = await Tutor.findOne({ _id: course.profesorId });
+    var cursos = tutor.cursos.filter((curso) => {
+      if (curso.id_curso == courseId) return false;
+      return true;
+    });
+    Tutor.updateOne({ _id: course.profesorId }, { cursos: cursos });
+    var alumnos = await Alumno.find({});
+    alumnos = alumnos.filter((alumno) => {
+      for (curso of alumno.cursos) {
+        if (curso.id_curso == courseId) return true;
+      }
+      return false;
+    });
+    for (alumno of alumnos) {
+      cursos = alumno.cursos.filter((curso) => {
+        if (curso.id_curso == courseId) return false;
+        return true;
+      });
+      Alumno.updateOne({ _id: alumno._id }, { cursos: cursos });
     }
     res.status(200).json(course);
   } catch (error) {
