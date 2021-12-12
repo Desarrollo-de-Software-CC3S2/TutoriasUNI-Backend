@@ -29,7 +29,7 @@ app.use("/api/v1/alumnos", alumnos);
 app.use("/api/v1/tutores", tutores);
 app.use("/api/v1/bot",bots);
 
-const port = 8000;
+const port = process.env.PORT || 8000;
 
 const start = async () => {
   try {
