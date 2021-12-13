@@ -16,6 +16,7 @@ const CourseSchema = new mongoose.Schema({
       {
         tipo: String,
         link: String,
+        nombre: String,
       },
     ],
     default: [],

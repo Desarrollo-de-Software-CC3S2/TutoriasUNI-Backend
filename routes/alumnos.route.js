@@ -8,10 +8,11 @@ const {
   getUserAllCourses,
   getUserCourse,
   addUserToCourse,
+  updateUser,
 } = require("../controllers/alumnos.controller");
 
 router.route("/").get(getAllUsers).post(createUser);
-router.route("/:userId").get(getUser);
+router.route("/:userId").get(getUser).patch(updateUser);
 router.route("/:userId/courses").get(getUserAllCourses);
 router
   .route("/:userId/courses/:courseId")

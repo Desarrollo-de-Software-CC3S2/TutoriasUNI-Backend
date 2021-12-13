@@ -33,6 +33,23 @@ const createUser = async (req, res) => {
   }
 };
 
+const updateUser = async (req, res) => {
+  try {
+    const { userId: userId } = req.params;
+    const user = await Alumno.findOneAndUpdate({ _id: userId }, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    if (!user) {
+      res.status(404);
+    } else {
+      res.status(202).json(user);
+    }
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
+};
+
 // mostrar todos los cursos
 const getUserAllCourses = async (req, res) => {
   const { userId: userId } = req.params;
@@ -98,4 +115,5 @@ module.exports = {
   getUserAllCourses,
   getUserCourse,
   addUserToCourse,
+  updateUser,
 };
