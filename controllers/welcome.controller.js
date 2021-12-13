@@ -1,7 +1,7 @@
-const index = async (req, res) => {
+const get_welcome = (req, res) => {
   res.sendFile(process.cwd() + "../index.html");
 };
 
 module.exports = {
-  index,
+  get_welcome,
 };
