@@ -7,6 +7,7 @@ const mensaje_bot = async (req, res) => {
     let pregunta = req.body.cadena
     pregunta = pregunta.toLocaleLowerCase();
     let cadena = pregunta
+    let temporal = ""
     let respuesta = []
     let responces = ""
     let zzz = 0;
@@ -20,18 +21,20 @@ const mensaje_bot = async (req, res) => {
             case 1:
                 // mostrar cursos de matematica que estoy llevando el profesor-"nombre_del_profesor"
                 const dataUser1 = await Alumno.findById(user)
+                const alum = await Alumno.find({})
                 const id_cursos1 = dataUser1.cursos.map(value => value.id_curso)
                 const cursos1 = await CourseModel.find({ _id:{$in:id_cursos1}})
-                //console.log(cursos1)
+                console.log(alum)
                 const id_profesores1 = cursos1.map(value => value.profesorId)
                 const data_profesor1 = await Tutor.find({ _id:{$in:id_profesores1}})
-                console.log(dataUser1)
+                //console.log(dataUser1)
                 for (var x = 0; x < dataUser1.cursos.length; x++) {
                     var zz = dataUser1.cursos[x].nombre_tutor;
                     zz = zz.toLocaleLowerCase();
                     var Nombre = RegExp(zz);
                     if (Nombre.test(cadena) && dataUser1.cursos[x].tema == "Matematica"){
-                        responces = dataUser1.cursos[x].nombre + " " + dataUser1.cursos[x].tema + " (" + dataUser1.cursos[x].id_curso + ") | "
+                        responces = responces + dataUser1.cursos[x].nombre + " " + dataUser1.cursos[x].tema + " (" + dataUser1.cursos[x].id_curso + ") | "
+                        
                     }
                 }
                 
@@ -48,7 +51,7 @@ const mensaje_bot = async (req, res) => {
                     zz = zz.toLocaleLowerCase();
                     var Nombre = RegExp(zz);
                     if (Nombre.test(cadena) && dataUser2.cursos[x].tema == "Fisica") {
-                        responces = dataUser1.cursos[x].nombre + " " + dataUser1.cursos[x].tema + " | "
+                        responces = responces + dataUser2.cursos[x].nombre + " " + dataUser2.cursos[x].tema + " (" + dataUser2.cursos[x].id_curso + ") | "
                     }
                 }
                 break
@@ -65,7 +68,7 @@ const mensaje_bot = async (req, res) => {
                     zz = zz.toLocaleLowerCase();
                     var Nombre = RegExp(zz);
                     if (Nombre.test(cadena) && dataUser3.cursos[x].tema == "Quimica") {
-                        console.log(dataUser3.cursos[x].nombre, " ", dataUser3.cursos[x].tema)
+                        responces = responces + dataUser3.cursos[x].nombre + " " + dataUser3.cursos[x].tema + " (" + dataUser3.cursos[x].id_curso + ") | "
                     }
                 }
                 break
@@ -82,7 +85,7 @@ const mensaje_bot = async (req, res) => {
                     zz = zz.toLocaleLowerCase();
                     var Nombre = RegExp(zz);
                     if (Nombre.test(cadena) && dataUser4.cursos[x].tema == "Computacion") {
-                        console.log(dataUser4.cursos[x].nombre, " ", dataUser4.cursos[x].tema)
+                        responces = responces + dataUser4.cursos[x].nombre + " " + dataUser4.cursos[x].tema + " (" + dataUser4.cursos[x].id_curso + ") | "
                     }
                 }
                 break
@@ -99,7 +102,7 @@ const mensaje_bot = async (req, res) => {
                     zz = zz.toLocaleLowerCase();
                     var Nombre = RegExp(zz);
                     if(Nombre.test(cadena)){
-                        console.log(dataUser5.cursos[x].nombre," ", dataUser5.cursos[x].tema)
+                        responces = responces + dataUser5.cursos[x].nombre + " " + dataUser5.cursos[x].tema + " (" + dataUser5.cursos[x].id_curso + ") | "
                     }
                 }
                 
@@ -115,7 +118,7 @@ const mensaje_bot = async (req, res) => {
                     if(Nombre.test(cadena)){
                         for(var y=0 ; y<tutor6[x].cursos.length ; y++){
                             if(tutor6[x].cursos[y].tema == "Matematica"){
-                                console.log(tutor6[x].cursos[y].tema," ",tutor6[x].cursos[y].nombre)
+                                responces = responces + tutor6[x].cursos[y].tema + " " + tutor6[x].cursos[y].nombre+" (" + tutor6[x].cursos.id_curso + ") | "
                             }
                         }
                     }
@@ -132,7 +135,7 @@ const mensaje_bot = async (req, res) => {
                     if(Nombre.test(cadena)){
                         for(var y=0 ; y<tutor7[x].cursos.length ; y++){
                             if(tutor7[x].cursos[y].tema == "Fisica"){
-                                console.log(tutor7[x].cursos[y].tema," ",tutor7[x].cursos[y].nombre)
+                                responces = responces + tutor7[x].cursos[y].tema + " " + tutor7[x].cursos[y].nombre+" (" + tutor7[x].cursos.id_curso + ") | "
                             }
                         }
                     }
@@ -149,7 +152,7 @@ const mensaje_bot = async (req, res) => {
                     if(Nombre.test(cadena)){
                         for(var y=0 ; y<tutor8[x].cursos.length ; y++){
                             if(tutor8[x].cursos[y].tema == "Quimica"){
-                                console.log(tutor8[x].cursos[y].tema," ",tutor8[x].cursos[y].nombre)
+                                responces = responces +  tutor8[x].cursos[y].tema + " " + tutor8[x].cursos[y].nombre+" (" + tutor8[x].cursos.id_curso + ") | "
                             }
                         }
                     }
@@ -165,7 +168,7 @@ const mensaje_bot = async (req, res) => {
                     if(Nombre.test(cadena)){
                         for(var y=0 ; y<tutor9[x].cursos.length ; y++){
                             if(tutor9[x].cursos[y].tema == "Computacion"){
-                                console.log(tutor9[x].cursos[y].tema," ",tutor9[x].cursos[y].nombre)
+                                responces = responces +  tutor8[x].cursos[y].tema + " " + tutor8[x].cursos[y].nombre+" (" + tutor8[x].cursos.id_curso + ") | "
                             }
                         }
                     }
@@ -180,7 +183,7 @@ const mensaje_bot = async (req, res) => {
                     var Nombre = RegExp(zz);
                     if(Nombre.test(cadena)){
                         for(var y=0 ; y<tutor10[x].cursos.length ; y++){
-                            console.log(tutor10[x].cursos[y].tema," ",tutor10[x].cursos[y].nombre)
+                            responces = responces + tutor10[x].cursos[y].tema," ",tutor10[x].cursos[y].nombre+ " | "
 
                         }
                     }
@@ -197,7 +200,7 @@ const mensaje_bot = async (req, res) => {
                 //console.log(dataUser11)
                 for (var x = 0; x < dataUser11.cursos.length; x++) {
                     if(dataUser11.cursos[x].tema =="Matematica"){
-                        console.log(dataUser11.cursos[x].tema," ",dataUser11.cursos[x].nombre)
+                        responces = responces + dataUser11.cursos[x].tema + " " + dataUser11.cursos[x].nombre + " | "
                     }
                 }
                 break
@@ -212,7 +215,7 @@ const mensaje_bot = async (req, res) => {
                 //console.log(dataUser11)
                 for (var x = 0; x < dataUser12.cursos.length; x++) {
                     if(dataUser12.cursos[x].tema =="Fisica"){
-                        console.log(dataUser12.cursos[x].tema," ",dataUser12.cursos[x].nombre)
+                        responces = responces + dataUser12.cursos[x].tema + " " + dataUser12.cursos[x].nombre+ " | "
                     }
                 }
                 break
@@ -227,7 +230,7 @@ const mensaje_bot = async (req, res) => {
                 //console.log(dataUser11)
                 for (var x = 0; x < dataUser13.cursos.length; x++) {
                     if(dataUser13.cursos[x].tema =="Quimica"){
-                        console.log(dataUser13.cursos[x].tema," ",dataUser13.cursos[x].nombre)
+                        responces = responces + dataUser13.cursos[x].tema + " " + dataUser13.cursos[x].nombre+ " | "
                     }
                 }
                 break
@@ -241,7 +244,7 @@ const mensaje_bot = async (req, res) => {
                 //console.log(dataUser11)
                 for (var x = 0; x < dataUser14.cursos.length; x++) {
                     if(dataUser14.cursos[x].tema =="Computacion"){
-                        console.log(dataUser14.cursos[x].tema," ",dataUser14.cursos[x].nombre)
+                        responces = responces + dataUser14.cursos[x].tema + " " + dataUser14.cursos[x].nombre+ " | "
                     }
                 }
                 break
@@ -254,14 +257,14 @@ const mensaje_bot = async (req, res) => {
                 const data_profesor15 = await Tutor.find({ _id:{$in:id_profesores15}})
                 //console.log(dataUser11)
                 for (var x = 0; x < dataUser15.cursos.length; x++) {
-                    console.log(dataUser15.cursos[x].tema," ",dataUser15.cursos[x].nombre)
+                    responces = responces + dataUser15.cursos[x].tema + " " + dataUser15.cursos[x].nombre + " | "
                 }
                 break
             case 16:
                 const cursos16 = await CourseModel.find({});
                 for (var x = 0; x <cursos16.length; x++) {
                     if(cursos16[x].tema =="Matematica"){
-                        console.log(cursos16[x].tema," ",cursos16[x].nombre)
+                        responces = responces + cursos16[x].tema + " " + cursos16[x].nombre+ " | "
                     }
                 }
                 break
@@ -269,7 +272,7 @@ const mensaje_bot = async (req, res) => {
                 const cursos17 = await CourseModel.find({});
                 for (var x = 0; x <cursos17.length; x++) {
                     if(cursos17[x].tema =="Computacion"){
-                        console.log(cursos17[x].tema," ",cursos17[x].nombre)
+                        responces = responces + cursos17[x].tema + " " + cursos17[x].nombre+ " | "
                     }
                 }
                 break
@@ -277,7 +280,7 @@ const mensaje_bot = async (req, res) => {
                 const cursos18 = await CourseModel.find({});
                 for (var x = 0; x <cursos18.length; x++) {
                     if(cursos18[x].tema =="Fisica"){
-                        console.log(cursos18[x].tema," ",cursos18[x].nombre)
+                        responces = responces + cursos18[x].tema + " " + cursos18[x].nombre+ " | "
                     }
                 }
                 break
@@ -285,14 +288,14 @@ const mensaje_bot = async (req, res) => {
                 const cursos19 = await CourseModel.find({});
                 for (var x = 0; x <cursos19.length; x++) {
                     if(cursos19[x].tema =="Quimica"){
-                        console.log(cursos19[x].tema," ",cursos19[x].nombre)
+                        responces = responces + cursos19[x].tema + " " + cursos19[x].nombre + " | "
                     }
                 }
                 break
             case 20:
                 const cursos21 = await CourseModel.find({});
                 for (var x = 0; x <cursos21.length; x++) {
-                    console.log(cursos21[x].tema," ",cursos21[x].nombre)
+                    responces = responces + cursos21[x].tema + ": " + cursos21[x].nombre + " | "
                 }
                 break
             case 21:
@@ -305,15 +308,18 @@ const mensaje_bot = async (req, res) => {
                     mm21=0
                     if(dataUser21.cursos[x].tema=="Matematica"){
                         for(var i=0 ; i<long_data21 ; i++){
-                            mm21++;
+                            if(dataUser21.cursos[x].nombre_tutor==datas21[i]){
+                                mm21++;
+                            }
                         }
                         if(mm21==0){
-                            datas.push(dataUser21.cursos[x].nombre_tutor)
+                            datas21.push(dataUser21.cursos[x].nombre_tutor)
+                            responces = responces + datas21[long_data21] + " "
                             long_data21++;
                         }
                     }
                 }
-                console.log(datas21)
+                
                 break
             case 22:
                 const dataUser22 = await Alumno.findById(user)  
@@ -325,19 +331,20 @@ const mensaje_bot = async (req, res) => {
                     mm22=0
                     if(dataUser22.cursos[x].tema=="Fisica"){
                         for(var i=0 ; i<long_data22 ; i++){
-                            mm22++;
+                            if(dataUser22.cursos[x].nombre_tutor==datas22[i]){
+                                mm22++;
+                            }
                         }
                         if(mm22==0){
-                            datas.push(dataUser22.cursos[x].nombre_tutor)
+                            datas22.push(dataUser22.cursos[x].nombre_tutor)
+                            responces = responces + datas22[long_data22] + " "
                             long_data22++;
                         }
                     }
                 }
-                console.log(datas22)
                 break
             case 23:
                 const dataUser23 = await Alumno.findById(user)  
-                //console.log(dataUser21)
                 let datas23 = [];
                 let long_data23 = 0;
                 let mm23=0;
@@ -345,15 +352,17 @@ const mensaje_bot = async (req, res) => {
                     mm23=0
                     if(dataUser23.cursos[x].tema=="Quimica"){
                         for(var i=0 ; i<long_data23 ; i++){
-                            mm23++;
+                            if(dataUser23.cursos[x].nombre_tutor==datas23[i]){
+                                mm23++;
+                            }
                         }
                         if(mm23==0){
-                            datas.push(dataUser23.cursos[x].nombre_tutor)
+                            datas23.push(dataUser23.cursos[x].nombre_tutor)
+                            responces = responces + datas23[long_data23] + " "
                             long_data23++;
                         }
                     }
                 }
-                console.log(datas23)
                 break
             case 24:
                 const dataUser24 = await Alumno.findById(user)  
@@ -365,43 +374,109 @@ const mensaje_bot = async (req, res) => {
                     mm24=0
                     if(dataUser24.cursos[x].tema=="Computacion"){
                         for(var i=0 ; i<long_data24 ; i++){
-                            mm24++;
+                            if(dataUser24.cursos[x].nombre_tutor==datas24[i]){
+                                mm24++;
+                            }
                         }
                         if(mm24==0){
-                            datas.push(dataUser24.cursos[x].nombre_tutor)
+                            datas24.push(dataUser24.cursos[x].nombre_tutor)
+                            responces = responces + datas24[long_data24] + " "
                             long_data24++;
                         }
                     }
                 }
-                console.log(datas24)
+                
                 break
             case 25:
+                const dataUser25 = await Alumno.findById(user)  
+                //console.log(dataUser21)
+                let datas25 = [];
+                let long_data25 = 0;
+                let mm25=0;
+                for (var x=0; x<dataUser25.cursos.length ; x++){
+                    mm25=0
+                    for(var i=0 ; i<long_data25 ; i++){
+                        if(dataUser25.cursos[x].nombre_tutor==datas25[i]){
+                            mm25++;
+                        }
+                    }
+                    if(mm25==0){
+                        datas25.push(dataUser25.cursos[x].nombre_tutor)
+                        responces = responces + datas25[long_data25] + " "
+                        long_data25++;
+                    }
+                }
                 break
             case 26:
+                const tutor26 = await Tutor.find({})
+                for(var x=0 ; x<tutor26.length ; x++){
+                    console.log(tutor26[x].name_lastname, ":")
+                    for(var y=0 ; y<tutor26[x].cursos.length;y++){
+                        if(tutor26[x].cursos[y].tema == "Matematica"){ 
+                            responces = responces + tutor26[x].name_lastname + " | "
+                            y=tutor26[x].cursos.length;
+                        }
+                    }
+                }
+
                 break
             case 27:
+                const tutor27 = await Tutor.find({})
+                for(var x=0 ; x<tutor27.length ; x++){
+                    console.log(tutor27[x].name_lastname, ":")
+                    for(var y=0 ; y<tutor27[x].cursos.length;y++){
+                        if(tutor27[x].cursos[y].tema == "Quimica"){ 
+                            responces = responces + tutor27[x].name_lastname + " | "
+                            y=tutor27[x].cursos.length;
+                        }
+                    }
+                }
                 break
             case 28:
+                const tutor28 = await Tutor.find({})
+                for(var x=0 ; x<tutor28.length ; x++){
+                    console.log(tutor28[x].name_lastname, ":")
+                    for(var y=0 ; y<tutor28[x].cursos.length;y++){
+                        if(tutor28[x].cursos[y].tema == "Computacion"){ 
+                            responces = responces + tutor28[x].name_lastname + " | "
+                            y=tutor28[x].cursos.length;
+                        }
+                    }
+                }
                 break
             case 29:
+                const tutor29 = await Tutor.find({})
+                for(var x=0 ; x<tutor29.length ; x++){
+                    console.log(tutor29[x].name_lastname, ":")
+                    for(var y=0 ; y<tutor29[x].cursos.length;y++){
+                        if(tutor29[x].cursos[y].tema == "Fisica"){ 
+                            responces = responces + tutor29[x].name_lastname + " | "
+                            y=tutor29[x].cursos.length;
+                        }
+                    }
+                }
                 break
             case 30:
+                const tutor30 = await Tutor.find({})
+                for(var x=0 ; x<tutor30.length ; x++){
+                    responces = responces + tutor30[x].name_lastname + " | "
+                }
                 break
             case 31:
                 // mostrar cursos de matematica que estoy llevando el profesor-"nombre_del_profesor"
-                const dataUser30 = await Alumno.findById(user)
-                const id_cursos30 = dataUser30.cursos.map(value => value.id_curso)
-                const cursos30 = await CourseModel.find({ _id: { $in: id_cursos30 } })
+                const dataUser31 = await Alumno.findById(user)
+                const id_cursos31 = dataUser31.cursos.map(value => value.id_curso)
+                const cursos31 = await CourseModel.find({ _id: { $in: id_cursos31 } })
                 //console.log(cursos1)
-                const id_profesores30 = cursos30.map(value => value.profesorId)
-                const data_profesor30 = await Tutor.find({ _id: { $in: id_profesores30 } })
+                const id_profesores31 = cursos31.map(value => value.profesorId)
+                const data_profesor31 = await Tutor.find({ _id: { $in: id_profesores31 } })
                 // console.log(dataUser1)
-                for (var x = 0; x < dataUser30.cursos.length; x++) {
-                    var zz = dataUser30.cursos[x].nombre_tutor;
+                for (var x = 0; x < dataUser31.cursos.length; x++) {
+                    var zz = dataUser31.cursos[x].nombre_tutor;
                     zz = zz.toLocaleLowerCase();
                     var Nombre = RegExp(zz);
-                    if (Nombre.test(cadena) && dataUser30.cursos[x].tema == "Idiomas") {
-                        console.log(dataUser30.cursos[x].nombre, " ", dataUser30.cursos[x].tema)
+                    if (Nombre.test(cadena) && dataUser31.cursos[x].tema == "Idiomas") {
+                        rresponces = responces + dataUser31.cursos[x].nombre + " " + dataUser31.cursos[x].tema+ " | "
                     }
                 }
                 break
@@ -419,7 +494,7 @@ const mensaje_bot = async (req, res) => {
                     zz = zz.toLocaleLowerCase();
                     var Nombre = RegExp(zz);
                     if (Nombre.test(cadena) && dataUser32.cursos[x].tema == "Letras") {
-                        console.log(dataUser32.cursos[x].nombre, " ", dataUser32.cursos[x].tema)
+                        responces = responces + dataUser32.cursos[x].nombre + " " + dataUser32.cursos[x].tema + " | "
                     }
                 }
                 break
@@ -434,7 +509,7 @@ const mensaje_bot = async (req, res) => {
                 //console.log(dataUser11)
                 for (var x = 0; x < dataUser33.cursos.length; x++) {
                     if(dataUser33.cursos[x].tema =="Idiomas"){
-                        console.log(dataUser33.cursos[x].tema," ",dataUser33.cursos[x].nombre)
+                        responces = responces + dataUser33.cursos[x].tema + " " + dataUser33.cursos[x].nombre+ " | "
                     }
                 }
                 break
@@ -449,7 +524,7 @@ const mensaje_bot = async (req, res) => {
                 //console.log(dataUser11)
                 for (var x = 0; x < dataUser34.cursos.length; x++) {
                     if(dataUser34.cursos[x].tema =="Letras"){
-                        console.log(dataUser34.cursos[x].tema," ",dataUser34.cursos[x].nombre)
+                        responces = responces + dataUser34.cursos[x].tema + " " + dataUser34.cursos[x].nombre + " | "
                     }
                 }
                 break
@@ -463,7 +538,7 @@ const mensaje_bot = async (req, res) => {
                     if(Nombre.test(cadena)){
                         for(var y=0 ; y<tutor35[x].cursos.length ; y++){
                             if(tutor8[x].cursos[y].tema == "Idiomas"){
-                                console.log(tutor35[x].cursos[y].tema," ",tutor35[x].cursos[y].nombre)
+                                responces = responces + tutor35[x].cursos[y].tema + " " + tutor35[x].cursos[y].nombre + " | "
                             }
                         }
                     }
@@ -479,7 +554,7 @@ const mensaje_bot = async (req, res) => {
                     if(Nombre.test(cadena)){
                         for(var y=0 ; y<tutor36[x].cursos.length ; y++){
                             if(tutor36[x].cursos[y].tema == "Letras"){
-                                console.log(tutor36[x].cursos[y].tema," ",tutor36[x].cursos[y].nombre)
+                                responces = responces + tutor36[x].cursos[y].tema + " " + tutor36[x].cursos[y].nombre + " | "
                             }
                         }
                     }
@@ -489,7 +564,7 @@ const mensaje_bot = async (req, res) => {
                 const cursos37 = await CourseModel.find({});
                 for (var x = 0; x <cursos37.length; x++) {
                     if(cursos37[x].tema =="Idiomas"){
-                        console.log(cursos37[x].tema," ",cursos37[x].nombre)
+                        responces = responces + cursos37[x].tema + " " + cursos37[x].nombre + " | "
                     }
                 }
                 break
@@ -497,19 +572,79 @@ const mensaje_bot = async (req, res) => {
                 const cursos38 = await CourseModel.find({});
                 for (var x = 0; x <cursos38.length; x++) {
                     if(cursos38[x].tema =="Letras"){
-                        console.log(cursos38[x].tema," ",cursos38[x].nombre)
+                        responces = responces + cursos38[x].tema + " " + cursos38[x].nombre + " | "
                     }
                 }
                 break
             case 39:
-
+                const dataUser39 = await Alumno.findById(user)  
+                //console.log(dataUser21)
+                let datas39 = [];
+                let long_data39 = 0;
+                let mm39=0;
+                for (var x=0; x<dataUser39.cursos.length ; x++){
+                    mm39=0
+                    if(dataUser39.cursos[x].tema=="Idiomas"){
+                        for(var i=0 ; i<long_data39 ; i++){
+                            if(dataUser39.cursos[x].nombre_tutor==dataUser39.cursos[i].nombre_tutor){
+                                mm39++;
+                            }
+                        }
+                        if(mm39==0){
+                            datas39.push(dataUser39.cursos[x].nombre_tutor)
+                            responces = responces + datas39[long_data39] + " "
+                            long_data39++;
+                        }
+                    }
+                }
             
                 break
             case 40:
+                const dataUser40 = await Alumno.findById(user)  
+                //console.log(dataUser21)
+                let datas40 = [];
+                let long_data40 = 0;
+                let mm40=0;
+                for (var x=0; x<dataUser40.cursos.length ; x++){
+                    mm40=0
+                    if(dataUser40.cursos[x].tema=="Letras"){
+                        for(var i=0 ; i<long_data40 ; i++){
+                            if(dataUser40.cursos[x].nombre_tutor==dataUser40.cursos[i].nombre_tutor){
+                                mm40++;
+                            }
+                        }
+                        if(mm40==0){
+                            datas40.push(dataUser40.cursos[x].nombre_tutor)
+                            responces = responces + datas40[long_data40] + " | "
+                            long_data40++;
+                        }
+                    }
+                }
                 break
             case 41:
+                const tutor41 = await Tutor.find({})
+                for(var x=0 ; x<tutor41.length ; x++){
+                    console.log(tutor41[x].name_lastname, ":")
+                    for(var y=0 ; y<tutor41[x].cursos.length;y++){
+                        if(tutor41[x].cursos[y].tema == "Idiomas"){ 
+                            responces = responces + tutor41[x].name_lastname + " | "
+                            y=tutor41[x].cursos.length;
+                        }
+                    }
+                }
                 break
+
             case 42:
+                const tutor42 = await Tutor.find({})
+                for(var x=0 ; x<tutor42.length ; x++){
+                    console.log(tutor42[x].name_lastname, ":")
+                    for(var y=0 ; y<tutor42[x].cursos.length;y++){
+                        if(tutor42[x].cursos[y].tema == "Letras"){ 
+                            responces = responces + tutor42[x].name_lastname + " | "
+                            y=tutor42[x].cursos.length;
+                        }
+                    }
+                }
                 break
         }
         res.status(200).json({msg:responces})
@@ -595,7 +730,7 @@ function get_filtro(cadena) {
     var s = 0;
     var no_se_encontro = 0;
     if (profesores.test(cadena)) {
-        if (curso.test(cadena)) {
+        if (curso.test(cadena) || math.test(cadena) || fisica.test(cadena) || quimica.test(cadena) || computacion.test(cadena) || idiomas.test(cadena) || letras.test(cadena)) {
             if (llevar.test(cadena)) {
                 if (math.test(cadena)) {
                     //mostrar todos los profesores que me enseñan el curso de matematica
@@ -632,7 +767,6 @@ function get_filtro(cadena) {
                     flack = 25;
                 }
 
-
             } else {
                 // ALL CURSOS ()
                 if (math.test(cadena)) {
@@ -649,7 +783,6 @@ function get_filtro(cadena) {
                     // mostar todos profesores que enseñan el curso de computacion
                     s++;
                     flack = 28;
-
                 }
                 if (fisica.test(cadena)) {
                     // mostar todos profesores que enseñan el curso de fisica
@@ -660,7 +793,6 @@ function get_filtro(cadena) {
                     // mostar todos profesores que enseñan el curso de computacion
                     s++;
                     flack = 41;
-
                 }
                 if (letras.test(cadena)) {
                     // mostar todos profesores que enseñan el curso de fisica
@@ -669,8 +801,11 @@ function get_filtro(cadena) {
                 }
             }
         } else {
-            // mostrar el nombre de todos los profesores
-            flack = 30
+            if(llevar.test(cadena)){
+                flack = 25;
+            }else{
+                flack = 30;
+            }
         }
     }
 
