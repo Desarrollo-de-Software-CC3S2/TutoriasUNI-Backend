@@ -22,7 +22,7 @@ const mensaje_bot = async (req, res) => {
         // mostrar cursos de matematica que estoy llevando el profesor-"nombre_del_profesor"
         const dataUser1 = await Alumno.findById(user);
         const id_cursos1 = dataUser1.cursos.map((value) => value.id_curso);
-        const cursos1 = await CourseModel.find({_id:{$in: id_cursos1 }});
+        const cursos1 = await CourseModel.find({ _id: { $in: id_cursos1 } });
         const id_profesores1 = cursos1.map((value) => value.profesorId);
         const data_profesor1 = await Tutor.find({
           _id: { $in: id_profesores1 },
@@ -99,7 +99,7 @@ const mensaje_bot = async (req, res) => {
       case 4:
         const dataUser4 = await Alumno.findById(user);
         const id_cursos4 = dataUser4.cursos.map((value) => value.id_curso);
-        const cursos4 = await CourseModel.find({_id:{ $in: id_cursos4 } });
+        const cursos4 = await CourseModel.find({ _id: { $in: id_cursos4 } });
         //console.log(cursos1)
         const id_profesores4 = cursos4.map((value) => value.profesorId);
         const data_profesor4 = await Tutor.find({
@@ -128,7 +128,9 @@ const mensaje_bot = async (req, res) => {
       case 5:
         const dataUser5 = await Alumno.findById(user);
         const id_cursos5 = dataUser5.cursos.map((value) => value.id_curso);
-        const cursos5 = await CourseModel.findById({_id: { $in: id_cursos5 }});
+        const cursos5 = await CourseModel.findById({
+          _id: { $in: id_cursos5 },
+        });
         //console.log(cursos1)
         const id_profesores5 = cursos5.map((value) => value.profesorId);
         const data_profesor5 = await Tutor.find({
@@ -806,11 +808,11 @@ const mensaje_bot = async (req, res) => {
           }
         }
         break;
-       
-        case 43:
-            const alumno_datos = await Alumno.findById(user);
-            responces = "Tu nombre es: " + alumno_datos.name;
-            break;
+
+      case 43:
+        const alumno_datos = await Alumno.findById(user);
+        responces = "Tu nombre es: " + alumno_datos.name;
+        break;
     }
     res.status(200).json({ msg: responces });
   }
@@ -823,6 +825,7 @@ const guardar_mensaje = async (req, res) => {
       new: true,
       runValidators: true,
     });
+    console.log(user);
     if (!user) {
       res.status(404);
     } else {
@@ -834,122 +837,120 @@ const guardar_mensaje = async (req, res) => {
 };
 
 function get_filtro(cadena) {
-    var flack = null;
+  var flack = null;
 
-    // Variables ----------------------
-    var llevar = RegExp("llevo|llevando|me enseña");
-    var estoy = RegExp("estoy matriculado|estoy matriculado|estoy llevando");
-    var cursos = /cursos/;
-    var curso = RegExp("curso|area|campo");
+  // Variables ----------------------
+  var llevar = RegExp("llevo|llevando|me enseña");
+  var estoy = RegExp("estoy matriculado|estoy matriculado|estoy llevando");
+  var cursos = /cursos/;
+  var curso = RegExp("curso|area|campo");
 
-    // fechas
-    var fecha = RegExp("dia|fecha");
+  // fechas
+  var fecha = RegExp("dia|fecha");
 
-    // cursos:
-    var math = /matematica/;
-    var fisica = /fisica/;
-    var quimica = /quimica/;
-    var computacion = /computacion/;
-    var idiomas = RegExp("idiomas|Idiomas");
-    var letras = RegExp("letras|Letras");
+  // cursos:
+  var math = /matematica/;
+  var fisica = /fisica/;
+  var quimica = /quimica/;
+  var computacion = /computacion/;
+  var idiomas = RegExp("idiomas|Idiomas");
+  var letras = RegExp("letras|Letras");
 
-    // nombre
-    var nombre = RegExp("nombre|nombres");
-    var profesor = RegExp("profesor|docente|tutor");
-    var profesores = RegExp("profesores|docentes|tutores");
+  // nombre
+  var nombre = RegExp("nombre|nombres");
+  var profesor = RegExp("profesor|docente|tutor");
+  var profesores = RegExp("profesores|docentes|tutores");
 
-    // datos personales
-    var edad = RegExp("edad|años");
-    var nombremio = RegExp("mi nombre|cómo me llamo");
-    var mi = RegExp("mis|mi");
+  // datos personales
+  var edad = RegExp("edad|años");
+  var nombremio = RegExp("mi nombre|cómo me llamo");
+  var mi = RegExp("mis|mi");
 
-    var alumno = RegExp("Alumnos|Estudiantes");
+  var alumno = RegExp("Alumnos|Estudiantes");
 
-    // complemento
-    var mostrar_dar = RegExp("mostrar|muestrame|dar|dame|enlistar");
-    var buscador = RegExp("buscador");
-    var ayuda = RegExp("Ayuda|ayuda|asistencia");
-    var como_unirme = RegExp("como unirme|como puedo unirme|unirme|unirse|unir");
-    var hola = RegExp("hola|hola me llamo")
-    var hora = RegExp("hora")
-    console.log(cadena);
+  // complemento
+  var mostrar_dar = RegExp("mostrar|muestrame|dar|dame|enlistar");
+  var buscador = RegExp("buscador");
+  var ayuda = RegExp("Ayuda|ayuda|asistencia");
+  var como_unirme = RegExp("como unirme|como puedo unirme|unirme|unirse|unir");
+  var hola = RegExp("hola|hola me llamo");
+  var hora = RegExp("hora");
+  console.log(cadena);
 
-    cadena = cadena.toLowerCase();
+  cadena = cadena.toLowerCase();
 
-    // ---------------------------------------------------------------------------------
-    // parte 1: Interactuar
-    var parte1 = 0;
-    var mensaje = "";
-    
-    var parte1 = 0;
+  // ---------------------------------------------------------------------------------
+  // parte 1: Interactuar
+  var parte1 = 0;
+  var mensaje = "";
 
-    if(fecha.test(cadena) && hora.test(cadena)){
-        parte1++;
-        var today = new Date();
-        var dd = today.getDate();
-        var mm = today.getMonth() + 1;
-        var yyyy = today.getFullYear();
-        	
-        var horas_mostrar = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
-        if (dd < 10) {
-          dd = '0' + dd;
-        }
-        
-        if (mm < 10) {
-          mm = '0' + mm;
-        }
-        
-        today = mm + '/' + dd + '/' + yyyy;
+  var parte1 = 0;
 
-        mensaje = "la fecha de hoy es: " + today + " hora: " + horas_mostrar;
-        
-        return mensaje;
+  if (fecha.test(cadena) && hora.test(cadena)) {
+    parte1++;
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1;
+    var yyyy = today.getFullYear();
 
- 
-
-    }else if(hora.test(cadena)){
-        var today = new Date();
-        var horas_mostrar1 = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
-        mensaje = "Hora: " + horas_mostrar1;
-        return mensaje;
-
-    }else if(fecha.test(cadena)){
-        var today = new Date();
-        var dd = today.getDate();
-        var mm = today.getMonth() + 1;
-        var yyyy = today.getFullYear();
-        	
-        if (dd < 10) {
-          dd = '0' + dd;
-        }
-        
-        if (mm < 10) {
-          mm = '0' + mm;
-        }
-        today = mm + '/' + dd + '/' + yyyy;
-        mensaje = "la fecha de hoy es: " + today;
-        return mensaje;
+    var horas_mostrar =
+      today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    if (dd < 10) {
+      dd = "0" + dd;
     }
 
-    if(ayuda.test(cadena)){
-        mensaje = "Este es un chatbot donde puedes preguntar sobre los cursos";
-        return mensaje;
+    if (mm < 10) {
+      mm = "0" + mm;
     }
 
-    if(como_unirme.test(cadena)){
-        mensaje = "Para unirte al curso debes pedir el id, es indispensable";
-        return mensaje;
+    today = mm + "/" + dd + "/" + yyyy;
+
+    mensaje = "la fecha de hoy es: " + today + " hora: " + horas_mostrar;
+
+    return mensaje;
+  } else if (hora.test(cadena)) {
+    var today = new Date();
+    var horas_mostrar1 =
+      today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    mensaje = "Hora: " + horas_mostrar1;
+    return mensaje;
+  } else if (fecha.test(cadena)) {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1;
+    var yyyy = today.getFullYear();
+
+    if (dd < 10) {
+      dd = "0" + dd;
     }
 
-    if(hola.test(cadena)){
-        mensaje = "Hola, soy tu Bot personalizado";
-        return mensaje;
+    if (mm < 10) {
+      mm = "0" + mm;
     }
+    today = mm + "/" + dd + "/" + yyyy;
+    mensaje = "la fecha de hoy es: " + today;
+    return mensaje;
+  }
 
-    if(nombremio.test(cadena)){
-        flack = 43;
-    }
-    
+  if (ayuda.test(cadena)) {
+    mensaje = "Este es un chatbot donde puedes preguntar sobre los cursos";
+    return mensaje;
+  }
+
+  if (como_unirme.test(cadena)) {
+    mensaje = "Para unirte al curso debes pedir el id, es indispensable";
+    return mensaje;
+  }
+
+  if (hola.test(cadena)) {
+    mensaje = "Hola, soy tu Bot personalizado";
+    return mensaje;
+  }
+
+  if (nombremio.test(cadena)) {
+    flack = 43;
+  }
+
   // -----------------------------------------------------------------------------------
   // parte 2, mostrar nombres de profesores
   var s = 0;
@@ -965,7 +966,7 @@ function get_filtro(cadena) {
       idiomas.test(cadena) ||
       letras.test(cadena)
     ) {
-      if (llevar.test(cadena)||estoy.test(cadena)) {
+      if (llevar.test(cadena) || estoy.test(cadena)) {
         if (math.test(cadena)) {
           //mostrar todos los profesores que me enseñan el curso de matematica
           s++;

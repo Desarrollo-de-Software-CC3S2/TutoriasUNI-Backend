@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const courses = require("./routes/courses.route");
 const alumnos = require("./routes/alumnos.route");
@@ -12,6 +13,7 @@ require("dotenv").config();
 // middleware
 app.use(express.json());
 app.use(express.raw());
+app.use(cors());
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
