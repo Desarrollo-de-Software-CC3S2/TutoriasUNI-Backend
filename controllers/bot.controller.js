@@ -128,12 +128,10 @@ const mensaje_bot = async (req, res) => {
       case 5:
         const dataUser5 = await Alumno.findById(user);
         const id_cursos5 = dataUser5.cursos.map((value) => value.id_curso);
-        const cursos5 = await CourseModel.findById({_id: { $in: id_cursos5 }});
+        const cursos5 = await CourseModel.find({_id: { $in: id_cursos5 }});
         //console.log(cursos1)
         const id_profesores5 = cursos5.map((value) => value.profesorId);
-        const data_profesor5 = await Tutor.find({
-          _id: { $in: id_profesores5 },
-        });
+        const data_profesor5 = await Tutor.find({_id: { $in: id_profesores5 }});
         // console.log(dataUser1)
         for (var x = 0; x < dataUser5.cursos.length; x++) {
           var zz = dataUser5.cursos[x].nombre_tutor;
@@ -162,6 +160,7 @@ const mensaje_bot = async (req, res) => {
           var Nombre = RegExp(zz);
           if (Nombre.test(cadena)) {
             for (var y = 0; y < tutor6[x].cursos.length; y++) {
+              console.log(tutor6[x].cursos[y])
               if (tutor6[x].cursos[y].tema == "Matematica") {
                 responces =
                   responces +
@@ -169,7 +168,7 @@ const mensaje_bot = async (req, res) => {
                   " " +
                   tutor6[x].cursos[y].nombre +
                   " (" +
-                  tutor6[x].cursos.id_curso +
+                  tutor6[x].cursos[y].id_curso +
                   ") | ";
               }
             }
@@ -186,6 +185,7 @@ const mensaje_bot = async (req, res) => {
           var Nombre = RegExp(zz);
           if (Nombre.test(cadena)) {
             for (var y = 0; y < tutor7[x].cursos.length; y++) {
+              console.log()
               if (tutor7[x].cursos[y].tema == "Fisica") {
                 responces =
                   responces +
@@ -193,7 +193,7 @@ const mensaje_bot = async (req, res) => {
                   " " +
                   tutor7[x].cursos[y].nombre +
                   " (" +
-                  tutor7[x].cursos.id_curso +
+                  tutor7[x].cursos[y].id_curso +
                   ") | ";
               }
             }
@@ -210,6 +210,7 @@ const mensaje_bot = async (req, res) => {
           var Nombre = RegExp(zz);
           if (Nombre.test(cadena)) {
             for (var y = 0; y < tutor8[x].cursos.length; y++) {
+              console.log(tutor8[x].cursos[y])
               if (tutor8[x].cursos[y].tema == "Quimica") {
                 responces =
                   responces +
@@ -217,7 +218,7 @@ const mensaje_bot = async (req, res) => {
                   " " +
                   tutor8[x].cursos[y].nombre +
                   " (" +
-                  tutor8[x].cursos.id_curso +
+                  tutor8[x].cursos[y].id_curso +
                   ") | ";
               }
             }
@@ -233,6 +234,7 @@ const mensaje_bot = async (req, res) => {
           var Nombre = RegExp(zz);
           if (Nombre.test(cadena)) {
             for (var y = 0; y < tutor9[x].cursos.length; y++) {
+              console.log(tutor9[x].cursos[y])
               if (tutor9[x].cursos[y].tema == "Computacion") {
                 responces =
                   responces +
@@ -240,7 +242,7 @@ const mensaje_bot = async (req, res) => {
                   " " +
                   tutor8[x].cursos[y].nombre +
                   " (" +
-                  tutor8[x].cursos.id_curso +
+                  tutor8[x].cursos[y].id_curso +
                   ") | ";
               }
             }
@@ -256,9 +258,7 @@ const mensaje_bot = async (req, res) => {
           var Nombre = RegExp(zz);
           if (Nombre.test(cadena)) {
             for (var y = 0; y < tutor10[x].cursos.length; y++) {
-              (responces = responces + tutor10[x].cursos[y].tema),
-                " ",
-                tutor10[x].cursos[y].nombre + " | ";
+              responces = responces + tutor10[x].cursos[y].tema + " " +tutor10[x].cursos[y].nombre + " (" + tutor10[x].cursos[y].id_curso + ") | ";
             }
           }
         }
@@ -280,8 +280,8 @@ const mensaje_bot = async (req, res) => {
               responces +
               dataUser11.cursos[x].tema +
               " " +
-              dataUser11.cursos[x].nombre +
-              " | ";
+              dataUser11.cursos[x].nombre + " (" + dataUser11.cursos[x].id_curso +
+              ") | ";
           }
         }
         break;
@@ -302,8 +302,8 @@ const mensaje_bot = async (req, res) => {
               responces +
               dataUser12.cursos[x].tema +
               " " +
-              dataUser12.cursos[x].nombre +
-              " | ";
+              dataUser12.cursos[x].nombre + " ("+dataUser12.cursos[x].id_curso +
+              ") | ";
           }
         }
         break;
@@ -325,7 +325,9 @@ const mensaje_bot = async (req, res) => {
               dataUser13.cursos[x].tema +
               " " +
               dataUser13.cursos[x].nombre +
-              " | ";
+              " (" +
+              dataUser13.cursos[x].id_curso +
+              ") | ";
           }
         }
         break;
@@ -345,8 +347,8 @@ const mensaje_bot = async (req, res) => {
               responces +
               dataUser14.cursos[x].tema +
               " " +
-              dataUser14.cursos[x].nombre +
-              " | ";
+              dataUser14.cursos[x].nombre + " ("+dataUser14.cursos[x].id_curso +
+              ") | ";
           }
         }
         break;
@@ -365,8 +367,8 @@ const mensaje_bot = async (req, res) => {
             responces +
             dataUser15.cursos[x].tema +
             " " +
-            dataUser15.cursos[x].nombre +
-            " | ";
+            dataUser15.cursos[x].nombre + " ("+dataUser15.cursos[x].id_curso +
+            ") | ";
         }
         break;
       case 16:
@@ -374,7 +376,7 @@ const mensaje_bot = async (req, res) => {
         for (var x = 0; x < cursos16.length; x++) {
           if (cursos16[x].tema == "Matematica") {
             responces =
-              responces + cursos16[x].tema + " " + cursos16[x].nombre + " | ";
+              responces + cursos16[x].tema + " " + cursos16[x].nombre + " ("+dataUser16.cursos[x].id_curso +") | ";
           }
         }
         break;
@@ -383,7 +385,7 @@ const mensaje_bot = async (req, res) => {
         for (var x = 0; x < cursos17.length; x++) {
           if (cursos17[x].tema == "Computacion") {
             responces =
-              responces + cursos17[x].tema + " " + cursos17[x].nombre + " | ";
+              responces + cursos17[x].tema + " " + cursos17[x].nombre +" ("+dataUser17.cursos[x].id_curso + ") | ";
           }
         }
         break;
@@ -392,7 +394,7 @@ const mensaje_bot = async (req, res) => {
         for (var x = 0; x < cursos18.length; x++) {
           if (cursos18[x].tema == "Fisica") {
             responces =
-              responces + cursos18[x].tema + " " + cursos18[x].nombre + " | ";
+              responces + cursos18[x].tema + " " + cursos18[x].nombre + " ("+dataUser18.cursos[x].id_curso +") | ";
           }
         }
         break;
@@ -401,7 +403,7 @@ const mensaje_bot = async (req, res) => {
         for (var x = 0; x < cursos19.length; x++) {
           if (cursos19[x].tema == "Quimica") {
             responces =
-              responces + cursos19[x].tema + " " + cursos19[x].nombre + " | ";
+              responces + cursos19[x].tema + " " + cursos19[x].nombre + " ("+dataUser19.cursos[x].id_curso +") | ";
           }
         }
         break;
@@ -409,7 +411,7 @@ const mensaje_bot = async (req, res) => {
         const cursos21 = await CourseModel.find({});
         for (var x = 0; x < cursos21.length; x++) {
           responces =
-            responces + cursos21[x].tema + ": " + cursos21[x].nombre + " | ";
+            responces + cursos21[x].tema + ": " + cursos21[x].nombre + " (" + cursos21[x].id_curso +") | ";
         }
         break;
       case 21:
@@ -638,13 +640,14 @@ const mensaje_bot = async (req, res) => {
         });
         //console.log(dataUser11)
         for (var x = 0; x < dataUser33.cursos.length; x++) {
+          console.log(dataUser33.cursos[x])
           if (dataUser33.cursos[x].tema == "Idiomas") {
             responces =
               responces +
               dataUser33.cursos[x].tema +
               " " +
-              dataUser33.cursos[x].nombre +
-              " | ";
+              dataUser33.cursos[x].nombre + " (" + dataUser33.cursos[x].id_curso
+              ") | ";
           }
         }
         break;
@@ -684,8 +687,8 @@ const mensaje_bot = async (req, res) => {
                   responces +
                   tutor35[x].cursos[y].tema +
                   " " +
-                  tutor35[x].cursos[y].nombre +
-                  " | ";
+                  tutor35[x].cursos[y].nombre +" ("+ tutor35[x].cursos[y]._id +
+                  ") | ";
               }
             }
           }
@@ -705,8 +708,8 @@ const mensaje_bot = async (req, res) => {
                   responces +
                   tutor36[x].cursos[y].tema +
                   " " +
-                  tutor36[x].cursos[y].nombre +
-                  " | ";
+                  tutor36[x].cursos[y].nombre + " ("+ tutor36[x].cursos[y]._id+
+                  ") | ";
               }
             }
           }
@@ -717,7 +720,7 @@ const mensaje_bot = async (req, res) => {
         for (var x = 0; x < cursos37.length; x++) {
           if (cursos37[x].tema == "Idiomas") {
             responces =
-              responces + cursos37[x].tema + " " + cursos37[x].nombre + " | ";
+              responces + cursos37[x].tema + " " + cursos37[x].nombre + " (" + cursos37[x]._id + ") | ";
           }
         }
         break;
@@ -726,7 +729,7 @@ const mensaje_bot = async (req, res) => {
         for (var x = 0; x < cursos38.length; x++) {
           if (cursos38[x].tema == "Letras") {
             responces =
-              responces + cursos38[x].tema + " " + cursos38[x].nombre + " | ";
+              responces + cursos38[x].tema + " " + cursos38[x].nombre + " (" + cursos38[x]._id + ") | ";
           }
         }
         break;
@@ -837,8 +840,8 @@ function get_filtro(cadena) {
     var flack = null;
 
     // Variables ----------------------
-    var llevar = RegExp("llevo|llevando|me enseña");
-    var estoy = RegExp("estoy matriculado|estoy matriculado|estoy llevando");
+    var llevar = RegExp("llevo|llevando|me enseña|mis cursos|estoy matriculado|estoy matriculado|estoy llevando|mis cursos");
+    var estoy = RegExp("estoy matriculado|estoy matriculado|estoy llevando|mis cursos");
     var cursos = /cursos/;
     var curso = RegExp("curso|area|campo");
 
