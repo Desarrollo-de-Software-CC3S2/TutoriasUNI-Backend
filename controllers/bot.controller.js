@@ -27,7 +27,6 @@ const mensaje_bot = async (req, res) => {
         const data_profesor1 = await Tutor.find({
           _id: { $in: id_profesores1 },
         });
-        //console.log(dataUser1)
         for (var x = 0; x < dataUser1.cursos.length; x++) {
           var zz = dataUser1.cursos[x].nombre_tutor;
           zz = zz.toLocaleLowerCase();
@@ -71,10 +70,10 @@ const mensaje_bot = async (req, res) => {
         }
         break;
       case 3:
+        // mostrar todos los cursos de quimica que me enseña el profesor "nombre_del_profesor"
         const dataUser3 = await Alumno.findById(user);
         const id_cursos3 = dataUser3.cursos.map((value) => value.id_curso);
         const cursos3 = await CourseModel.find({ _id: { $in: id_cursos3 } });
-        //console.log(cursos1)
         const id_profesores3 = cursos3.map((value) => value.profesorId);
         const data_profesor3 = await Tutor.find({
           _id: { $in: id_profesores3 },

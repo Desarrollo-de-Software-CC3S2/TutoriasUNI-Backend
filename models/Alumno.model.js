@@ -27,8 +27,8 @@ const AlumnoSchema = new mongoose.Schema({
     type: [
       {
         id_bot: String,
-        mensaje: String,
-        presona: Boolean,
+        text: String,
+        isBot: Boolean,
       },
     ],
     default: [],
