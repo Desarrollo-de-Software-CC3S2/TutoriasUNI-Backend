@@ -375,7 +375,7 @@ const mensaje_bot = async (req, res) => {
         for (var x = 0; x < cursos16.length; x++) {
           if (cursos16[x].tema == "Matematica") {
             responces =
-              responces + cursos16[x].tema + " " + cursos16[x].nombre + " ("+dataUser16.cursos[x].id_curso +") | ";
+              responces + cursos16[x].tema + " " + cursos16[x].nombre + " ("+cursos16[x]._id +") | ";
           }
         }
         break;
@@ -384,7 +384,7 @@ const mensaje_bot = async (req, res) => {
         for (var x = 0; x < cursos17.length; x++) {
           if (cursos17[x].tema == "Computacion") {
             responces =
-              responces + cursos17[x].tema + " " + cursos17[x].nombre +" ("+dataUser17.cursos[x].id_curso + ") | ";
+              responces + cursos17[x].tema + " " + cursos17[x].nombre +" ("+cursos17[x]._id + ") | ";
           }
         }
         break;
@@ -393,7 +393,7 @@ const mensaje_bot = async (req, res) => {
         for (var x = 0; x < cursos18.length; x++) {
           if (cursos18[x].tema == "Fisica") {
             responces =
-              responces + cursos18[x].tema + " " + cursos18[x].nombre + " ("+dataUser18.cursos[x].id_curso +") | ";
+              responces + cursos18[x].tema + " " + cursos18[x].nombre + " ("+cursos18[x]._id +") | ";
           }
         }
         break;
@@ -402,7 +402,7 @@ const mensaje_bot = async (req, res) => {
         for (var x = 0; x < cursos19.length; x++) {
           if (cursos19[x].tema == "Quimica") {
             responces =
-              responces + cursos19[x].tema + " " + cursos19[x].nombre + " ("+dataUser19.cursos[x].id_curso +") | ";
+              responces + cursos19[x].tema + " " + cursos19[x].nombre + " ("+cursos19[x]._id +") | ";
           }
         }
         break;
@@ -410,7 +410,7 @@ const mensaje_bot = async (req, res) => {
         const cursos21 = await CourseModel.find({});
         for (var x = 0; x < cursos21.length; x++) {
           responces =
-            responces + cursos21[x].tema + ": " + cursos21[x].nombre + " (" + cursos21[x].id_curso +") | ";
+            responces + cursos21[x].tema + ": " + cursos21[x].nombre + " (" + cursos21[x]._id +") | ";
         }
         break;
       case 21:
@@ -862,7 +862,7 @@ function get_filtro(cadena) {
 
     // datos personales
     var edad = RegExp("edad|años");
-    var nombremio = RegExp("mi nombre|cómo me llamo");
+    var nombremio = RegExp("mi nombre|cómo me llamo|como me llamo");
     var mi = RegExp("mis|mi");
 
     var alumno = RegExp("Alumnos|Estudiantes");
@@ -889,30 +889,39 @@ function get_filtro(cadena) {
         parte1++;
         var today = new Date();
         var dd = today.getDate();
+        var hora_normal = today.getHours()
+        if(hora_normal-5 >=0 ){
+          hora_normal = hora_normal-5;
+
+        }else{
+          hora_normal = hora_normal + 24 - 5;
+          dd = dd - 1;
+        }
         var mm = today.getMonth() + 1;
         var yyyy = today.getFullYear();
-        	
-        var horas_mostrar = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
-        if (dd < 10) {
-          dd = '0' + dd;
-        }
         
-        if (mm < 10) {
-          mm = '0' + mm;
-        }
+        var horas_mostrar = hora_normal + ':' + today.getMinutes() + ':' + today.getSeconds();
         
-        today = mm + '/' + dd + '/' + yyyy;
+        
+        today = dd + '/' + mm + '/' + yyyy;
 
         mensaje = "la fecha de hoy es: " + today + " hora: " + horas_mostrar;
         
         return mensaje;
 
- 
-
     }else if(hora.test(cadena)){
+        
         var today = new Date();
-        var horas_mostrar1 = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+        var hora_normal = today.getHours()
+
+        if(hora_normal-5 >=0 ){
+          hora_normal = hora_normal-5;
+        }else{
+          hora_normal = hora_normal + 24 - 5;
+        }
+          var horas_mostrar1 = hora_normal + ':' + today.getMinutes() + ':' + today.getSeconds();
         mensaje = "Hora: " + horas_mostrar1;
+        
         return mensaje;
 
     }else if(fecha.test(cadena)){
@@ -920,7 +929,15 @@ function get_filtro(cadena) {
         var dd = today.getDate();
         var mm = today.getMonth() + 1;
         var yyyy = today.getFullYear();
-        	
+        
+        var hora_normal = today.getHours()
+
+        if(hora_normal-5 >=0 ){
+          
+        }else{
+          dd = dd - 1; 
+        }
+
         if (dd < 10) {
           dd = '0' + dd;
         }
@@ -928,7 +945,7 @@ function get_filtro(cadena) {
         if (mm < 10) {
           mm = '0' + mm;
         }
-        today = mm + '/' + dd + '/' + yyyy;
+        today = dd + '/' + mm + '/' + yyyy;
         mensaje = "la fecha de hoy es: " + today;
         return mensaje;
     }
